@@ -14,4 +14,6 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
+    (r'^accounts/', include('registration.urls')),
+    (r'^$', direct_to_template, { 'template': 'index.html' }, 'index')
 )
