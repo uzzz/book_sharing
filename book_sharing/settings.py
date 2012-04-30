@@ -1,4 +1,4 @@
-# Django settings for book_sharing project.
+# Django settings for book_sharing projeswp
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -115,7 +115,6 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Uncomment the next line to enable the admin:
