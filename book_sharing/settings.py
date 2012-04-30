@@ -153,6 +153,9 @@ LOGGING = {
 
 # django-registration settings
 ACCOUNT_ACTIVATION_DAYS = 2
-EMAIL_HOST = 'localhost'
-DEFAULT_FROM_EMAIL = 'webmaster@localhost'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'ffake751@gmail.com'
+EMAIL_HOST_PASSWORD = 'ffake751'
+EMAIL_PORT = 587
 LOGIN_REDIRECT_URL = '/'
