@@ -6,15 +6,7 @@ from django.views.generic.simple import direct_to_template
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'book_sharing.views.home', name='home'),
-    # url(r'^book_sharing/', include('book_sharing.foo.urls')),
-
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
-    # url(r'^admin/', include(admin.site.urls)),
     (r'^accounts/', include('registration.urls')),
+    (r'^users/', include('users.urls')),
     (r'^$', direct_to_template, { 'template': 'index.html' }, 'index')
 )
