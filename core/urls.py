@@ -8,5 +8,6 @@ from django.views.generic.simple import direct_to_template
 urlpatterns = patterns('',
     (r'^accounts/', include('registration.urls')),
     (r'^users/', include('users.urls')),
+    (r'^books/', include('books.urls')),
     (r'^$', direct_to_template, { 'template': 'index.html' }, 'index')
 )
