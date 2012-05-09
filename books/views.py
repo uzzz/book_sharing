@@ -22,7 +22,7 @@ def import_books(request):
                 newBook.title = bookTitle
                 newBook.owner = request.user
                 newBook.save()
-            return HttpResponseRedirect('/') # Redirect after POST
+            return HttpResponseRedirect('/books/my') # Redirect after POST
     else:
         form = BooksImportForm() # An unbound form
 
