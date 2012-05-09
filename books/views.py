@@ -40,7 +40,7 @@ class MyBooksListView(ListView):
 
 class MyBookDeleteView(DeleteView):
     model = Book
-    success_url = '/books/my'
+    success_url = '/books/my/'
 
     def get_object(self, queryset=None):
         book = super(MyBookDeleteView, self).get_object()
