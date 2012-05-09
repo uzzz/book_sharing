@@ -1,6 +1,9 @@
-from django.http import HttpRequest
 from forms import BooksImportForm
+
+from django.http import HttpRequest
+from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 
 
 def import_books(request):
@@ -13,5 +16,4 @@ def import_books(request):
 
     return render_to_response('import_books.html', {
         'form': form,
-    })
-            
+    }, context_instance=RequestContext(request))

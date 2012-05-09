@@ -1,5 +1,12 @@
-<form action="/contact/" method="post">
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<form action="{% url import_books %}" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Submit" />
 </form>
+
+{% endblock %}
