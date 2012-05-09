@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+    <ul>
+    {% for book in books %}
+        <li>
+            {{ book.title }}
+            <form action="{% url delete_my_book pk=book.pk %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="delete" />
+            </form>
+        </li>
+    {% endfor %}
+    </ul>
+
+{% endblock %}
