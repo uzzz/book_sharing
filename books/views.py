@@ -4,8 +4,10 @@ from django.http import HttpRequest
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def import_books(request):
     if request.method == 'POST':
         form = BooksImportForm(request.POST)
