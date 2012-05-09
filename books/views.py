@@ -14,8 +14,8 @@ def import_books(request):
         form = BooksImportForm(request.POST)
         if form.is_valid():
             newBook = Book()
-            newBook.title = form.books
-            newBook.owner = reques.user
+            newBook.title = form.cleaned_data['books']
+            newBook.owner = request.user
             newBook.save()
             return HttpResponseRedirect('/') # Redirect after POST
     else:
