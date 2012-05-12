@@ -1,5 +1,6 @@
 from forms import BooksImportForm, BooksEditForm
 from models import Book
+from core.mixins import LoginRequiredMixin
 
 from django.http import HttpRequest
 from django.http import HttpResponseRedirect
@@ -39,25 +40,24 @@ class AllBooksListView(ListView):
     def get_queryset(self):
         return Book.objects.all()
 
-class MyBookMixin(SingleObjectMixin):
-    
+class MyBookMixin(LoginRequiredMixin, SingleObjectMixin):
+
     def dispatch(self, *args, **kwargs):
         return super(MyBookMixin, self).dispatch(*args, **kwargs)
-    
+
     def get_object(self, queryset=None):
         book = super(MyBookMixin, self).get_object()
         if not book.owner == self.request.user:
             raise Http404
         return book
-    
-    
-class MyBooksListView(ListView):
+
+class MyBooksListView(LoginRequiredMixin, ListView):
     context_object_name = 'books'
     template_name = 'my_books_list.html'
 
     def get_queryset(self):
         return Book.objects.filter(owner_id=self.request.user.id)
-    
+
 class MyBookUpdateView(UpdateView, MyBookMixin):
     model = Book
     template_name = "book_form.html"
@@ -67,5 +67,3 @@ class MyBookUpdateView(UpdateView, MyBookMixin):
 class MyBookDeleteView(DeleteView, MyBookMixin):
     model = Book
     success_url = '/books/my/'
-
-    
