@@ -16,7 +16,7 @@ class Book(models.Model):
     def read(self):
         pass
 
-       @transition(source-'requested', target='given', save=True)
+    @transition(source='requested', target='given', save=True)
     def give(self, requester):
         bookRequest = BookRequest.objects.get(requester=requester,
             is_confirmed=False, book=self)
@@ -32,6 +32,10 @@ class Book(models.Model):
     def finish_reading(self):
         pass
 
+    def requests(self):
+        requests = BookRequest.objects.filter(book=self)
+        # print requests
+        return requests
 
     def __unicode__(self):
         return self.title
@@ -41,4 +45,4 @@ class BookRequest(models.Model):
     requester = models.ForeignKey(User)
     book = models.ForeignKey(Book)
     requested = models.DateTimeField(auto_now_add=True)
-    is_confirmed = models.BooleanField(initial=False)
+    is_confirmed = models.BooleanField(default=False)
