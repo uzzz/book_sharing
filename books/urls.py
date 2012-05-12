@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from views import *
 
 urlpatterns = patterns('',
+    url(r'all/$', AllBooksListView.as_view(), name='all_books'),
     url(r'import/$', import_books, name='import_books'),
     url(r'my/$', login_required(MyBooksListView.as_view()), name='my_books'),
     url(r'(?P<pk>\d+)/edit/$', login_required(MyBookUpdateView.as_view()), 

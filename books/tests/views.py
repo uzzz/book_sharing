@@ -5,6 +5,19 @@ from factories import BookFactory
 from users.tests.factories import UserFactory
 from books.models import Book
 
+class AllBooksListViewTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.book1 = BookFactory.create()
+        self.book2 = BookFactory.create()
+
+    def test_books_list(self):
+        response = self.client.get('/books/all/')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, self.book1.title)
+        self.assertContains(response, self.book2.title)
+
 class MyBooksListViewTests(TestCase):
     def setUp(self):
         self.client = Client()
@@ -19,6 +32,7 @@ class MyBooksListViewTests(TestCase):
         user1.set_password('password')
         user1.save()
         user2 = UserFactory.create()
+
         book1 = BookFactory.create(owner=user1)
         book2 = BookFactory.create(owner=user1)
         book3 = BookFactory.create(owner=user2)
@@ -42,7 +56,8 @@ class MyBookDeleteViewTest(TestCase):
     def test_delete_book_not_logged(self):
         response = self.client.post('/books/%d/delete/' % self.book.id)
 
-        self.assertRedirects(response, '/accounts/login/?next=/books/1/delete/')
+        self.assertRedirects(response,
+                '/accounts/login/?next=/books/%d/delete/' % self.book.id)
         self.assertEqual(self.book, Book.objects.get(pk=self.book.pk))
 
     def test_delete_not_my_book(self):

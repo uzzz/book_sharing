@@ -32,6 +32,12 @@ def import_books(request):
         'form': form,
     }, context_instance=RequestContext(request))
 
+class AllBooksListView(ListView):
+    context_object_name = 'books'
+    template_name = 'all_books_list.html'
+
+    def get_queryset(self):
+        return Book.objects.all()
 
 class MyBookMixin(SingleObjectMixin):
     
@@ -47,7 +53,7 @@ class MyBookMixin(SingleObjectMixin):
     
 class MyBooksListView(ListView):
     context_object_name = 'books'
-    template_name = 'books_list.html'
+    template_name = 'my_books_list.html'
 
     def get_queryset(self):
         return Book.objects.filter(owner_id=self.request.user.id)
