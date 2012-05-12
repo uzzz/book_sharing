@@ -1,4 +1,6 @@
 from django import forms
+from models import Book
+
 
 class BooksImportForm(forms.Form):
     books = forms.CharField(widget=forms.Textarea)
@@ -12,3 +14,8 @@ class BooksImportForm(forms.Form):
             normalisedBookTitles.append(strippedTitle)
 
         return normalisedBookTitles
+
+class BooksEditForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = ("title",)

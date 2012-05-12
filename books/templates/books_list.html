@@ -10,6 +10,8 @@
                 {% csrf_token %}
                 <input type="submit" value="delete" />
             </form>
+            <a href="{% url edit_book pk=book.pk %}">Edit Item</a>
+            
         </li>
     {% endfor %}
     </ul>
