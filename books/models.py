@@ -33,9 +33,7 @@ class Book(models.Model):
         pass
 
     def requests(self):
-        requests = BookRequest.objects.filter(book=self)
-        # print requests
-        return requests
+        return BookRequest.objects.filter(book=self)
 
     def __unicode__(self):
         return self.title
