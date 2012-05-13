@@ -21,8 +21,9 @@ def import_books(request):
             rawInputData = form.cleaned_data['books']
             parsedBookList = BooksImportForm.parse_input_data(rawInputData)
             for bookTitle in parsedBookList:
-                newBook = Book(title = bookTitle, owner = request.user)
-                newBook.save()
+                if len(bookTitle) > 0:
+                    newBook = Book(title = bookTitle, owner = request.user)
+                    newBook.save()
             return HttpResponseRedirect('/books/my') # Redirect after POST
     else:
         form = BooksImportForm() # An unbound form

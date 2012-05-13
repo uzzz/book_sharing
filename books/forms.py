@@ -7,7 +7,7 @@ class BooksImportForm(forms.Form):
 
     @staticmethod
     def parse_input_data(DataFromForm):
-        rawBookTitles = DataFromForm.split('\n',1)
+        rawBookTitles = DataFromForm.split('\n')
         normalisedBookTitles = []
         for rawTitle in rawBookTitles:
             strippedTitle = rawTitle.strip()
