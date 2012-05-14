@@ -45,6 +45,27 @@ class MyBooksListViewTests(TestCase, LoginMixin):
             self.assertContains(response, book2.title)
             self.assertNotContains(response, book3.title)
 
+class MyBookEditViewTest(TestCase, LoginMixin):
+    #total cut-n-paste from delete test
+    #to do refactor test
+    def setUp(self):
+        self.client = Client()
+        self.book = BookFactory.create()
+        self.user = UserFactory.create()
+
+    def test_edit_book_not_logged(self):
+        response = self.client.post('/books/%d/edit/' % self.book.id)
+        self.assertRedirects(response,
+                '/accounts/login/?next=/books/%d/edit/' % self.book.id)
+        self.assertEqual(self.book, Book.objects.get(pk=self.book.pk))
+
+    def test_delete_not_my_book(self):
+        with self.login(self.user):
+            response = self.client.post('/books/%d/edit/' % self.book.id)
+
+            self.assertEqual(response.status_code, 404)
+
+
 class MyBookDeleteViewTest(TestCase, LoginMixin):
     def setUp(self):
         self.client = Client()

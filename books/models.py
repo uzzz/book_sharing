@@ -18,15 +18,15 @@ class Book(models.Model):
 
     @transition(source='requested', target='given', save=True)
     def give(self, requester):
-        bookRequest = BookRequest.objects.get(requester=requester,
+        book_request = BookRequest.objects.get(requester=requester,
             is_confirmed=False, book=self)
-        bookRequest.is_confirmed = True
-        bookRequest.save()
+        book_request.is_confirmed = True
+        book_request.save()
 
     @transition(source='given', target='free', save=True)
     def return_to_owner(self):
-        bookRequest = BookRequest.objects.get(book=self, is_confirmed=True)
-        bookRequest.delete()
+        book_request = BookRequest.objects.get(book=self, is_confirmed=True)
+        book_request.delete()
 
     @transition(source='reading', target='free', save=True)
     def finish_reading(self):
