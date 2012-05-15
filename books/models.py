@@ -10,6 +10,9 @@ class Book(models.Model):
 
     @transition(source='free', target='requested', save=True)
     def request(self, requester):
+        if requester == self.owner:
+            raise BookRequestError('Unable to request own book')
+
         BookRequest(requester=requester, book=self).save()
 
     @transition(source='free', target='reading', save=True)
@@ -44,3 +47,9 @@ class BookRequest(models.Model):
     book = models.ForeignKey(Book)
     requested = models.DateTimeField(auto_now_add=True)
     is_confirmed = models.BooleanField(default=False)
+
+class BookRequestError(Exception):
+    def __init__(self, value):
+        self.value = value
+    def __str__(self):
+        return repr(self.value)

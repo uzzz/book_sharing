@@ -14,3 +14,8 @@ class BookModelTests(TestCase):
         request = BookRequest(book=book, requester=user)
         request.save()
         self.assertEqual(list(book.requests()), [request])
+
+    def test_request_by_owner(self):
+        book = BookFactory.create()
+        with self.assertRaises(BookRequestError):
+            book.request(book.owner)

@@ -1,7 +1,8 @@
 from django.test import TestCase
 from django.test.client import Client
+from mock import MagicMock
 
-from factories import BookFactory
+from books.tests.factories import BookFactory
 from users.tests.factories import UserFactory
 from books.models import Book
 from core.tests.mixins import LoginMixin
@@ -94,3 +95,16 @@ class MyBookDeleteViewTest(TestCase, LoginMixin):
 
             self.assertRedirects(response, '/books/my/')
             self.assertEqual(Book.objects.filter(id=self.book.id).count(), 0)
+
+class BookRequestViewTest(TestCase, LoginMixin):
+    def setUp(self):
+        self.client = Client()
+        self.book = BookFactory.create()
+        self.user = UserFactory.create()
+
+    def test_request_a_book(self):
+        with self.login(self.user):
+            Book.request = MagicMock()
+            response = self.client.post('/books/%d/request/' % self.book.id)
+            self.assertRedirects(response, '/books/all/')
+            Book.request.assert_called_once_with(self.user)

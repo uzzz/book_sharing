@@ -9,5 +9,7 @@ urlpatterns = patterns('',
     url(r'(?P<pk>\d+)/edit/$', MyBookUpdateView.as_view(),
         name='edit_book'),
     url(r'(?P<pk>\d+)/delete/$', MyBookDeleteView.as_view(),
-        name='delete_my_book')
+        name='delete_my_book'),
+    url(r'(?P<pk>\d+)/request/$', BookRequestView.as_view(),
+        name='request_book')
 )

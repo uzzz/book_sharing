@@ -8,6 +8,7 @@ from django.http import Http404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
+from django.views.generic import View
 from django.views.generic import ListView
 from django.views.generic import DeleteView
 from django.views.generic import UpdateView
@@ -63,3 +64,13 @@ class MyBookUpdateView(UpdateView, MyBookMixin):
 class MyBookDeleteView(DeleteView, MyBookMixin):
     model = Book
     success_url = '/books/my/'
+
+class BookRequestView(View, SingleObjectMixin, LoginRequiredMixin):
+    model = Book
+    success_url = '/books/all/'
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.request(request.user)
+
+        return HttpResponseRedirect(self.success_url)

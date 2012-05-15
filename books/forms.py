@@ -4,6 +4,7 @@ from models import Book
 
 class BooksImportForm(forms.Form):
     books = forms.CharField(widget=forms.Textarea)
+
     def parse_input_data_to_title_list(self):
         data_from_form = self.cleaned_data['books']
         normalised_book_titles = []

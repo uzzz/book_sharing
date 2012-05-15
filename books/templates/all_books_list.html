@@ -4,7 +4,13 @@
 {% block content %}
     <ul>
     {% for book in books %}
-        <li>{{ book.title }}</li>
+        <li>
+            {{ book.title }}
+            <form action="{% url request_book pk=book.pk %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Request" />
+            </form>
+        </li>
     {% endfor %}
     </ul>
 
