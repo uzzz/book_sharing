@@ -33,9 +33,19 @@ def import_books(request):
 class AllBooksListView(ListView):
     context_object_name = 'books'
     template_name = 'all_books_list.html'
+    queryset = Book.objects.all()
 
-    def get_queryset(self):
-        return Book.objects.all()
+    def get_context_data(self, **kwargs):
+        context = super(AllBooksListView, self).get_context_data(**kwargs)
+        books = [
+            {
+                'book': book,
+                'requestable': book.is_available_for_request(self.request.user)
+            } for book in self.get_queryset()
+            ]
+        context[self.context_object_name] = books
+
+        return context
 
 class MyBookMixin(LoginRequiredMixin, SingleObjectMixin):
 

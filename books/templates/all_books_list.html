@@ -5,11 +5,13 @@
     <ul>
     {% for book in books %}
         <li>
-            {{ book.title }}
-            <form action="{% url request_book pk=book.pk %}" method="post">
+            {{ book.book.title }}
+            {% if book.requestable %}
+            <form action="{% url request_book pk=book.book.pk %}" method="post">
                 {% csrf_token %}
                 <input type="submit" value="Request" />
             </form>
+            {% endif %}
         </li>
     {% endfor %}
     </ul>

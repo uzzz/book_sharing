@@ -21,14 +21,14 @@ class Book(models.Model):
 
     @transition(source='requested', target='given', save=True)
     def give(self, requester):
-        book_request = BookRequest.objects.get(requester=requester,
-            is_confirmed=False, book=self)
+        book_request = self.requests().get(requester=requester,
+            is_confirmed=False)
         book_request.is_confirmed = True
         book_request.save()
 
     @transition(source='given', target='free', save=True)
     def return_to_owner(self):
-        book_request = BookRequest.objects.get(book=self, is_confirmed=True)
+        book_request = self.requests().get(is_confirmed=True)
         book_request.delete()
 
     @transition(source='reading', target='free', save=True)
@@ -37,6 +37,9 @@ class Book(models.Model):
 
     def requests(self):
         return BookRequest.objects.filter(book=self)
+
+    def is_available_for_request(self, user):
+        return self.state == 'free' and self.owner != user
 
     def __unicode__(self):
         return self.title
